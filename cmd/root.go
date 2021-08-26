@@ -28,7 +28,7 @@ import (
 )
 
 // Version Number
-const Version = "v1.0.0"
+const Version = "v1.1.1"
 
 var (
 	cfgFile, jobType string
@@ -85,6 +85,7 @@ func initConfig() {
 	viper.SetDefault("options.finderNumber", dth.DefaultFinderNumber)
 	viper.SetDefault("options.workerNumber", dth.DefaultWorkerNumber)
 	viper.SetDefault("options.includeMetadata", false)
+	viper.SetDefault("options.enableSynchronization", false)
 
 	viper.BindEnv("srcType", "SOURCE_TYPE")
 	viper.BindEnv("srcBucket", "SRC_BUCKET")
@@ -104,6 +105,7 @@ func initConfig() {
 
 	viper.BindEnv("jobTableName", "JOB_TABLE_NAME")
 	viper.BindEnv("jobQueueName", "JOB_QUEUE_NAME")
+	viper.BindEnv("userID", "USER_ID")
 
 	viper.BindEnv("options.maxKeys", "MAX_KEYS")
 	viper.BindEnv("options.chunkSize", "CHUNK_SIZE")
@@ -113,6 +115,7 @@ func initConfig() {
 	viper.BindEnv("options.finderNumber", "FINDER_NUMBER")
 	viper.BindEnv("options.workerNumber", "WORKER_NUMBER")
 	viper.BindEnv("options.includeMetadata", "INCLUDE_METADATA")
+	viper.BindEnv("options.enableSynchronization", "ENABLE_SYNCHRONIZATION")
 
 	if cfgFile != "" {
 		// Use config file from the flag.
@@ -132,14 +135,15 @@ func initConfig() {
 	}
 
 	options := &dth.JobOptions{
-		ChunkSize:          viper.GetInt("options.chunkSize"),
-		MultipartThreshold: viper.GetInt("options.multipartThreshold"),
-		MaxKeys:            viper.GetInt32("options.maxKeys"),
-		MessageBatchSize:   viper.GetInt("options.messageBatchSize"),
-		FinderDepth:        viper.GetInt("options.finderDepth"),
-		FinderNumber:       viper.GetInt("options.finderNumber"),
-		WorkerNumber:       viper.GetInt("options.workerNumber"),
-		IncludeMetadata:    viper.GetBool("options.includeMetadata"),
+		ChunkSize:             viper.GetInt("options.chunkSize"),
+		MultipartThreshold:    viper.GetInt("options.multipartThreshold"),
+		MaxKeys:               viper.GetInt32("options.maxKeys"),
+		MessageBatchSize:      viper.GetInt("options.messageBatchSize"),
+		FinderDepth:           viper.GetInt("options.finderDepth"),
+		FinderNumber:          viper.GetInt("options.finderNumber"),
+		WorkerNumber:          viper.GetInt("options.workerNumber"),
+		IncludeMetadata:       viper.GetBool("options.includeMetadata"),
+		EnableSynchronization: viper.GetBool("options.enableSynchronization"),
 	}
 
 	cfg = &dth.JobConfig{
@@ -159,6 +163,7 @@ func initConfig() {
 		DestInCurrentAccount: viper.GetBool("destInCurrentAccount"),
 		JobTableName:         viper.GetString("jobTableName"),
 		JobQueueName:         viper.GetString("jobQueueName"),
+		UserID:               viper.GetString("userID"),
 		JobOptions:           options,
 	}
 

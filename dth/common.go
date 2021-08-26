@@ -53,6 +53,9 @@ type S3Event struct {
 		S3                                           struct {
 			Object `json:"object"`
 		}
+		UserIdentity struct {
+			PrincipalId string
+		}
 	}
 }
 
@@ -161,4 +164,16 @@ func appendPrefix(key, prefix *string) *string {
 	}
 	newkey := fmt.Sprintf("%s%s%s", *prefix, delimiter, *key)
 	return &newkey
+}
+
+func createPath(bucketName *string, objKey *string) *string {
+	// log.Printf("bucketName is %s, objKey is %s", *bucketName, *objKey)
+	if !strings.Contains(*objKey, "/") {
+		return bucketName
+	}
+	pos := strings.LastIndex(*objKey, "/")
+	prefix := (*objKey)[:pos]
+	newpath := fmt.Sprintf("%s%s%s", *bucketName, "/", prefix)
+	// log.Printf("bucketName is %s, objKey is %s, newpath is %s", *bucketName, *objKey, newpath)
+	return &newpath
 }

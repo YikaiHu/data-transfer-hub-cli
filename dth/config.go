@@ -61,7 +61,7 @@ const (
 type JobOptions struct {
 	ChunkSize, MultipartThreshold, MessageBatchSize, FinderDepth, FinderNumber, WorkerNumber int
 	MaxKeys                                                                                  int32
-	IncludeMetadata                                                                          bool
+	IncludeMetadata, EnableSynchronization                                                   bool
 }
 
 // JobConfig is General Job Info
@@ -69,6 +69,7 @@ type JobConfig struct {
 	SrcType, SrcBucket, SrcPrefix, SrcRegion, SrcEndpoint, SrcCredential          string
 	DestBucket, DestPrefix, DestRegion, DestCredential, DestStorageClass, DestAcl string
 	JobTableName, JobQueueName                                                    string
+	UserID                                                                        string
 	SrcInCurrentAccount, DestInCurrentAccount                                     bool
 	*JobOptions
 }
