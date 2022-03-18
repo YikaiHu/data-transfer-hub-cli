@@ -1,0 +1,29 @@
+srcType: Amazon_S3
+srcBucket: dth-dev
+srcPrefix:
+srcPrefixList:
+srcRegion: us-east-1
+srcEndpoint:
+srcCredential: 
+srcInCurrentAccount: true
+
+destBucket: awstraining-dth-cn-northwest-1
+destPrefix: debug-0104
+destRegion: cn-northwest-1
+destCredential: cn-dev-credential
+destStorageClass: STANDARD
+destInCurrentAccount: false
+destAcl: bucket-owner-full-control
+
+jobTableName: DTH-S3EC2-rgVuz-S3TransferTable-17VEGROC93OKT
+jobQueueName: DTH-S3EC2-rgVuz-S3TransferQueue-7QCGUCAYF8TU
+
+options:
+  chunkSize: 5
+  multipartThreshold: 10
+  maxKeys: 1000
+  messageBatchSize: 10
+  finderDepth: 0
+  finderNumber: 1
+  workerNumber: 4
+  includeMetadata: false

@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+
+cat >> /etc/hosts << EOF
+${OSS_FINANCE_LB_IP} ${OSS_FINANCE_ENDPOINT}
+${OSS_FINANCE_LB_IP} ${SRC_BUCKET}.${OSS_FINANCE_ENDPOINT}
+EOF
+
+exec "$@"
