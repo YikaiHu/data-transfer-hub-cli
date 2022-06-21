@@ -98,6 +98,8 @@ func NewS3Client(ctx context.Context, bucket, prefix, prefixList, endpoint, regi
 		}
 		var url string
 		if endpoint != "" {
+			// Using Path Style
+			o.UsePathStyle = true
 			// if endpoint is provided, use the endpoint.
 			if strings.HasPrefix(endpoint, "http://") || strings.HasPrefix(endpoint, "https://") {
 				url = endpoint
@@ -170,10 +172,10 @@ func (c *S3Client) GetObject(ctx context.Context, key *string, size, start, chun
 func (c *S3Client) listObjectFn(ctx context.Context, continuationToken, prefix, delimiter *string, maxKeys int32) (*s3.ListObjectsV2Output, error) {
 
 	input := &s3.ListObjectsV2Input{
-		Bucket:    &c.bucket,
-		Prefix:    prefix,
-		MaxKeys:   maxKeys,
-		Delimiter: delimiter,
+		Bucket:       &c.bucket,
+		Prefix:       prefix,
+		MaxKeys:      maxKeys,
+		Delimiter:    delimiter,
 		EncodingType: "url",
 	}
 
