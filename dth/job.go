@@ -128,10 +128,9 @@ func NewFinder(ctx context.Context, cfg *JobConfig) (f *Finder) {
 // Run is main execution function for Finder.
 func (f *Finder) Run(ctx context.Context) {
 
-	// if !f.sqs.IsQueueEmpty(ctx) {
-	// 	log.Fatalf("Queue might not be empty or Unknown error... Please try again later")
-	// }
-	log.Printf("Finder Job started without sqs empty check.\n")
+	if !f.sqs.IsQueueEmpty(ctx) {
+		log.Fatalf("Queue might not be empty or Unknown error... Please try again later")
+	}
 
 	// Maximum number of queued batches to be sent to SQS
 	var bufferSize int = 500
