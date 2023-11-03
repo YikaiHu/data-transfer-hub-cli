@@ -480,6 +480,7 @@ func (c *S3Client) PutObject(ctx context.Context, key *string, body []byte, stor
 		ContentMD5:   &contentMD5,
 		StorageClass: types.StorageClass(*storageClass),
 		ACL:          types.ObjectCannedACL(*acl),
+		ServerSideEncryption: types.ServerSideEncryptionAes256,
 	}
 	if meta != nil {
 		input.ContentType = meta.ContentType
