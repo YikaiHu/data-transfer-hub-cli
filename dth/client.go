@@ -494,6 +494,7 @@ func (c *S3Client) CreateMultipartUpload(ctx context.Context, key, storageClass,
 		Key:          key,
 		StorageClass: types.StorageClass(*storageClass),
 		ACL:          types.ObjectCannedACL(*acl),
+		ServerSideEncryption: types.ServerSideEncryptionAes256,
 	}
 	if meta != nil {
 		input.ContentType = meta.ContentType
