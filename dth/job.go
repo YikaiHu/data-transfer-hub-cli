@@ -843,7 +843,7 @@ func (w *Worker) generateMultiPartTransferJobs(ctx context.Context, obj *Object,
 			meta = w.srcClient.HeadObject(ctx, &obj.Key)
 		}
 
-		uploadID, err = w.desClient.CreateMultipartUpload(ctx, destKey, &w.cfg.DestStorageClass, &w.cfg.DestAcl, meta)
+		uploadID, err = w.desClient.CreateMultipartUpload(ctx, destKey, &w.cfg.DestStorageClass, &w.cfg.DestAcl, &w.cfg.DestSSEKMSKeyId, meta)
 		if err != nil {
 			log.Printf("Failed to create upload ID - %s for %s\n", err.Error(), *destKey)
 			return 0, err
@@ -949,7 +949,7 @@ func (w *Worker) migrateBigFile(ctx context.Context, obj *Object, destKey *strin
 			meta = w.srcClient.HeadObject(ctx, &obj.Key)
 		}
 
-		uploadID, err = w.desClient.CreateMultipartUpload(ctx, destKey, &w.cfg.DestStorageClass, &w.cfg.DestAcl, meta)
+		uploadID, err = w.desClient.CreateMultipartUpload(ctx, destKey, &w.cfg.DestStorageClass, &w.cfg.DestAcl, &w.cfg.DestSSEKMSKeyId, meta)
 		if err != nil {
 			log.Printf("Failed to create upload ID - %s for %s\n", err.Error(), *destKey)
 			return &TransferResult{
@@ -1100,7 +1100,7 @@ func (w *Worker) transfer(ctx context.Context, obj *Object, destKey *string, sta
 
 	} else {
 		log.Printf("----->Uploading %d Bytes to %s/%s\n", chunkSize, w.cfg.DestBucket, *destKey)
-		etag, err = w.desClient.PutObject(ctx, destKey, body, &w.cfg.DestStorageClass, &w.cfg.DestAcl, meta)
+		etag, err = w.desClient.PutObject(ctx, destKey, body, &w.cfg.DestStorageClass, &w.cfg.DestAcl, &w.cfg.DestSSEKMSKeyId, meta)
 	}
 
 	body = nil // release memory

@@ -77,6 +77,7 @@ func initConfig() {
 	viper.SetDefault("destPrefix", "")
 	viper.SetDefault("destCredential", "")
 	viper.SetDefault("destAcl", "bucket-owner-full-control")
+	viper.SetDefault("destSSEKMSKeyId", "")
 
 	viper.SetDefault("options.chunkSize", dth.DefaultChunkSize)
 	viper.SetDefault("options.multipartThreshold", dth.DefaultMultipartThreshold)
@@ -106,6 +107,7 @@ func initConfig() {
 	viper.BindEnv("destInCurrentAccount", "DEST_IN_CURRENT_ACCOUNT")
 	viper.BindEnv("destStorageClass", "DEST_STORAGE_CLASS")
 	viper.BindEnv("destAcl", "DEST_ACL")
+	viper.BindEnv("destSSEKMSKeyId", "DEST_SSE_KMS_KEY_ID")
 
 	viper.BindEnv("jobTableName", "JOB_TABLE_NAME")
 	viper.BindEnv("jobQueueName", "JOB_QUEUE_NAME")
@@ -168,6 +170,7 @@ func initConfig() {
 		DestCredential:       viper.GetString("destCredential"),
 		DestStorageClass:     viper.GetString("destStorageClass"),
 		DestAcl:              viper.GetString("destAcl"),
+		DestSSEKMSKeyId:      viper.GetString("destSSEKMSKeyId"),
 		DestInCurrentAccount: viper.GetBool("destInCurrentAccount"),
 		JobTableName:         viper.GetString("jobTableName"),
 		JobQueueName:         viper.GetString("jobQueueName"),

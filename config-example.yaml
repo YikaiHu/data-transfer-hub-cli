@@ -15,6 +15,7 @@ destCredential:
 destStorageClass: STANDARD
 destInCurrentAccount: true
 destAcl: bucket-owner-full-control
+destSSEKMSKeyId:
 
 jobTableName: test-table
 jobQueueName: test-queue
